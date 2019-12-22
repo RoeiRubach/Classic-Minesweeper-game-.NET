@@ -1,0 +1,13 @@
+d:\תיקיה חדשה (3)\visual studio 2017\Projects\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.exe.config
+d:\תיקיה חדשה (3)\visual studio 2017\Projects\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.exe
+d:\תיקיה חדשה (3)\visual studio 2017\Projects\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.pdb
+d:\תיקיה חדשה (3)\visual studio 2017\Projects\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.csprojResolveAssemblyReference.cache
+d:\תיקיה חדשה (3)\visual studio 2017\Projects\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.exe
+d:\תיקיה חדשה (3)\visual studio 2017\Projects\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.pdb
+E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.exe.config
+E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.exe
+E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.pdb
+E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.csproj.CoreCompileInputs.cache
+E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.exe
+E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.pdb
+E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.csprojResolveAssemblyReference.cache
