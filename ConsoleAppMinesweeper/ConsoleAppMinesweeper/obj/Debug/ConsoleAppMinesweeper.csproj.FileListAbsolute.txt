@@ -11,3 +11,10 @@ E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.c
 E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.exe
 E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.pdb
 E:\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.csprojResolveAssemblyReference.cache
+D:\Visual Studio projects\Console-App-Minesweeper\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.exe.config
+D:\Visual Studio projects\Console-App-Minesweeper\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.exe
+D:\Visual Studio projects\Console-App-Minesweeper\ConsoleAppMinesweeper\ConsoleAppMinesweeper\bin\Debug\ConsoleAppMinesweeper.pdb
+D:\Visual Studio projects\Console-App-Minesweeper\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.csprojAssemblyReference.cache
+D:\Visual Studio projects\Console-App-Minesweeper\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.csproj.CoreCompileInputs.cache
+D:\Visual Studio projects\Console-App-Minesweeper\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.exe
+D:\Visual Studio projects\Console-App-Minesweeper\ConsoleAppMinesweeper\ConsoleAppMinesweeper\obj\Debug\ConsoleAppMinesweeper.pdb
