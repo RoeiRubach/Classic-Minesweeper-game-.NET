@@ -25,31 +25,18 @@ namespace ConsoleAppMinesweeper
             while (!isGameOver)
             {
                 Console.ForegroundColor = ConsoleColor.Gray;
-                GameInstructors();
+
+                GameInstructions gi = new GameInstructions();
+                gi.InitializeInstructions();
+
                 DifficultyLevel(out userInput);
-                if (userInput == "Expert")
-                {
-                    Console.Clear();
-                    Console.SetCursorPosition(24, 3);
-                    Console.WriteLine(userInput + "? Wow you're brave!");
-                    Console.SetCursorPosition(29, 5);
-                    Console.WriteLine("Anyway - Good luck!");
-                    Console.SetCursorPosition(38, 6);
-                    Console.Write("---------");
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.SetCursorPosition(31, 3);
-                    Console.WriteLine(userInput + " it is!");
-                    Console.SetCursorPosition(31, 4);
-                    Console.Write("-------------");
-                }
+                PrintUserSelection(userInput);
+
                 GetMeasures(out rows, out columns, out mines, userInput);
                 Cell[,] game2DArray = new Cell[rows, columns];
 
                 InitializeMineSweeper(game2DArray, mines);
-                LoadingScreen();
+                LoadingScreen.Load();
                 Console.ForegroundColor = ConsoleColor.White;
                 CordsForILeft(game2DArray, userInput);
                 Console.Clear();
@@ -60,54 +47,17 @@ namespace ConsoleAppMinesweeper
             }
         }
 
-        /// <summary>
-        /// Prints the game instructions.
-        /// </summary>
-        static void GameInstructors()
+        private static void PrintUserSelection(string userInput)
         {
-            bool loop = false;
-            while (!loop)
-            {
-                Console.SetCursorPosition(25, 1);
-                Console.Write("Welcome to my Minesweeper!");
-                Console.SetCursorPosition(25, 2);
-                Console.Write("-------------------------");
-                Console.SetCursorPosition(29, 4);
-                Console.Write("Game Instructions:");
-                Console.SetCursorPosition(29, 5);
-                Console.Write("-----------------");
-                Console.SetCursorPosition(14, 7);
-                Console.Write("Use the -  Enter button  - to choose a cell/location.");
-                Console.SetCursorPosition(14, 8);
-                Console.Write("Use the - Insert button  - to place a flag.");
-                Console.SetCursorPosition(14, 9);
-                Console.Write("Use the - Delete button  - to remove the flag.");
-                Console.SetCursorPosition(14, 10);
-                Console.Write("Use the - arrows buttons - to move around the field.");
-                Console.SetCursorPosition(9, 11);
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("Above the cursor's position is where will you be clicking on.");
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.SetCursorPosition(27, 12);
-                Console.Write("Write OK to continue - ");
-                string sInput = Console.ReadLine();
-                switch (sInput)
-                {
-                    case "OK":
-                    case "ok":
-                    case "oK":
-                    case "Ok":
-                    case "K":
-                    case "k":
-                        loop = true;
-                        break;
+            Console.Clear();
+            Console.SetCursorPosition(31, 3);
+            Console.WriteLine(userInput + " it is!");
+            Console.SetCursorPosition(31, 4);
 
-                    default:
-                        Console.SetCursorPosition(49, 12);
-                        Console.WriteLine("\t\t\t\t\t\t");
-                        break;
-                }
-            }
+            if(userInput == CUSTOMIZED)
+                Console.Write("----------------");
+            else
+                Console.Write("--------------");
         }
 
         /// <summary>
@@ -121,32 +71,27 @@ namespace ConsoleAppMinesweeper
             {
                 Console.Clear();
                 Console.SetCursorPosition(15, 5);
-                Console.Write("Choose difficulty by writing it and press - Enter.\n               Beginner, Amateur, Expert or Customized: ");
-                userInput = Console.ReadLine();
+                Console.Write("Choose difficulty by writing it and press - Enter.\n\t\t  Beginner, Amateur, Expert or Customized: ");
 
-                //The variable get set by the user's input.
+                userInput = Console.ReadLine();
                 switch (userInput.ToLower())
                 {
                     case "beginner":
-                    case "begin":
                     case "b":
                         passCheck = true;
                         userInput = BEGINNER;
                         break;
                     case "amateur":
-                    case "amatu":
                     case "a":
                         passCheck = true;
                         userInput = AMATEUR;
                         break;
                     case "expert":
-                    case "exp":
                     case "e":
                         passCheck = true;
                         userInput = EXPERT;
                         break;
                     case "customized":
-                    case "custom":
                     case "c":
                         passCheck = true;
                         userInput = CUSTOMIZED;
@@ -166,125 +111,126 @@ namespace ConsoleAppMinesweeper
         /// <summary>
         /// Gets the user's difficulty input and converting it to the game's measures - borders and the number of mines.
         /// </summary>
-        /// <param name="rowNum">Keeps the row number that was set.</param>
-        /// <param name="colNum">Keeps the column number that was set.</param>
-        /// <param name="mineNum">Keeps the mines number that was set.</param>
+        /// <param name="rowLength">Keeps the row number that was set.</param>
+        /// <param name="colLength">Keeps the column number that was set.</param>
+        /// <param name="mineCount">Keeps the mines number that was set.</param>
         /// <param name="userInput">Uses the user's input.</param>
-        static void GetMeasures(out int rowNum, out int colNum, out int mineNum, string userInput)
+        static void GetMeasures(out int rowLength, out int colLength, out int mineCount, string userInput)
         {
             if (userInput == BEGINNER)
             {
-                rowNum = 11;
-                colNum = 11;
-                mineNum = 10;
+                rowLength = 11;
+                colLength = 11;
+                mineCount = 10;
             }
             else if (userInput == AMATEUR)
             {
-                rowNum = 18;
-                colNum = 18;
-                mineNum = 40;
+                rowLength = 18;
+                colLength = 18;
+                mineCount = 40;
             }
             else if (userInput == EXPERT)
             {
-                rowNum = 18;
-                colNum = 32;
-                mineNum = 99;
+                rowLength = 18;
+                colLength = 32;
+                mineCount = 99;
             }
 
             else
             {
-                do
-                {
-                    Console.Clear();
-                    Console.SetCursorPosition(31, 3);
-                    Console.Write(userInput + " it is!");
-                    Console.SetCursorPosition(31, 4);
-                    Console.Write("----------------");
-                    Console.SetCursorPosition(29, 6);
-                    Console.Write("Enter the game width: ");
-                } while (!int.TryParse(Console.ReadLine(), out rowNum));
+                rowLength = GetUserRow(userInput);
 
-                while (rowNum >= 41 || rowNum <= 5)
+                const int MAX_WIDTH = 40;
+                const int MIN_WIDTH = 6;
+                string lower = "lower";
+                string higher = "higher";
+
+                while (rowLength > MAX_WIDTH || rowLength < MIN_WIDTH)
                 {
-                    if (rowNum >= 41)
-                    {
-                        do
-                        {
-                            Console.Clear();
-                            Console.SetCursorPosition(10, 4);
-                            Console.Write("The width number you've entered is greater than the field.");
-                            Console.SetCursorPosition(12, 6);
-                            Console.Write("Please enter a new width number, which is 40 or less: ");
-                        } while (!int.TryParse(Console.ReadLine(), out rowNum));
-                    }
-                    else if (rowNum <= 5)
-                    {
-                        do
-                        {
-                            Console.Clear();
-                            Console.SetCursorPosition(12, 4);
-                            Console.Write("The width number you've entered can't create a field.");
-                            Console.SetCursorPosition(10, 6);
-                            Console.Write("Please enter a bigger width number, which is 6 or higher: ");
-                        } while (!int.TryParse(Console.ReadLine(), out rowNum));
-                    }
+                    if (rowLength > MAX_WIDTH)
+                        rowLength = GetValidLengthByUser(MAX_WIDTH, lower);
+
+                    else if (rowLength < MIN_WIDTH)
+                        rowLength = GetValidLengthByUser(MIN_WIDTH, higher);
                 }
 
-                do
-                {
-                    Console.Clear();
-                    Console.SetCursorPosition(31, 3);
-                    Console.Write(userInput + " it is!");
-                    Console.SetCursorPosition(31, 4);
-                    Console.Write("----------------");
-                    Console.SetCursorPosition(29, 6);
-                    Console.Write("Enter the game height: ");
-                } while (!int.TryParse(Console.ReadLine(), out colNum));
+                colLength = GetUserColumn(userInput);
 
-                while (colNum >= 41 || colNum <= 5)
+                while (colLength > MAX_WIDTH || colLength < MIN_WIDTH)
                 {
-                    if (colNum >= 41)
-                    {
-                        do
-                        {
-                            Console.Clear();
-                            Console.SetCursorPosition(10, 4);
-                            Console.Write("The height number you've entered is greater than the field.");
-                            Console.SetCursorPosition(12, 6);
-                            Console.Write("Please enter a new height number, which is 40 or less: ");
-                        } while (!int.TryParse(Console.ReadLine(), out colNum));
-                    }
-                    else if (colNum <= 5)
-                    {
-                        do
-                        {
-                            Console.Clear();
-                            Console.SetCursorPosition(12, 4);
-                            Console.Write("The height number you've entered can't create a field.");
-                            Console.SetCursorPosition(10, 6);
-                            Console.Write("Please enter a bigger height number, which is 6 or higher: ");
-                        } while (!int.TryParse(Console.ReadLine(), out colNum));
-                    }
+                    if (colLength > MAX_WIDTH)
+                        colLength = GetValidLengthByUser(MAX_WIDTH, lower);
+
+                    else if (colLength < MIN_WIDTH)
+                        colLength = GetValidLengthByUser(MIN_WIDTH, higher);
                 }
-                do
-                {
-                    Console.Clear();
-                    Console.SetCursorPosition(11, 5);
-                    Console.Write("Enter the number of mines you want in your minesweeper: ");
-                } while (!int.TryParse(Console.ReadLine(), out mineNum));
 
-                while (mineNum >= (rowNum * colNum) / 5)
+                mineCount = GetMinesNumByUser();
+
+                while (mineCount >= (rowLength * colLength) / MIN_WIDTH)
                 {
                     do
                     {
                         Console.Clear();
                         Console.SetCursorPosition(9, 4);
                         Console.Write("The number of mines you've entered is greater than the field.");
-                        Console.SetCursorPosition(20, 6);
+                        Console.SetCursorPosition(9, 6);
                         Console.Write("Please enter a smaller mine number: ");
-                    } while (!int.TryParse(Console.ReadLine(), out mineNum));
+                    } while (!int.TryParse(Console.ReadLine(), out mineCount));
                 }
             }
+        }
+
+        private static int GetMinesNumByUser()
+        {
+            int result;
+            do
+            {
+                Console.Clear();
+                Console.SetCursorPosition(11, 5);
+                Console.Write("Enter the number of mines you want in your minesweeper: ");
+            } while (!int.TryParse(Console.ReadLine(), out result));
+            return result;
+        }
+
+        private static int GetValidLengthByUser(int limit, string scope)
+        {
+            int result;
+            do
+            {
+                Console.Clear();
+                Console.SetCursorPosition(12, 4);
+                Console.Write("The number you've entered isn't valid.");
+                Console.SetCursorPosition(12, 6);
+                Console.Write($"Please enter a different number, which is {limit} or {scope}: ");
+            } while (!int.TryParse(Console.ReadLine(), out result));
+
+            return result;
+        }
+
+        private static int GetUserColumn(string userInput)
+        {
+            int colNum;
+            do
+            {
+                PrintUserSelection(userInput);
+                Console.SetCursorPosition(29, 6);
+                Console.Write("Enter the board height: ");
+            } while (!int.TryParse(Console.ReadLine(), out colNum));
+            return colNum;
+        }
+
+        private static int GetUserRow(string userInput)
+        {
+            int rowNum;
+            do
+            {
+                PrintUserSelection(userInput);
+                Console.SetCursorPosition(28, 6);
+                Console.Write("Enter the board width: ");
+
+            } while (!int.TryParse(Console.ReadLine(), out rowNum));
+            return rowNum;
         }
 
         /// <summary>
@@ -350,23 +296,6 @@ namespace ConsoleAppMinesweeper
                     game2DArray[i, j].IsHidden = true;
                     game2DArray[i, j].IsMarked = false;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Prints dots with a delay of 0.130 seconds.
-        /// </summary>
-        static void LoadingScreen()
-        {
-            int dotMovementNum = 30;
-            const int REPETITIONS_NUM = 12;
-
-            for (int i = 0; i <= REPETITIONS_NUM; i++)
-            {
-                Console.SetCursorPosition(dotMovementNum, 7);
-                Console.Write("  .");
-                Thread.Sleep(130);
-                dotMovementNum++;
             }
         }
 
@@ -752,7 +681,7 @@ namespace ConsoleAppMinesweeper
                             //Checks if the current location isn't equal to 'empty' and it's hidden.
                             if (playableArray[aroundCharI, aroundCharJ].MinesAround != 0 && playableArray[aroundCharI, aroundCharJ].IsHidden)
                             {
-                                DyeNumbers(playableArray, aroundCharI, aroundCharJ);
+                                NumColorsGuarantor.DyeNumber(playableArray, aroundCharI, aroundCharJ);
                                 playableArray[aroundCharI, aroundCharJ].IsHidden = false;
                                 Console.Write(playableArray[aroundCharI, aroundCharJ].MinesAround);
                                 Console.ForegroundColor = ConsoleColor.White;
@@ -772,50 +701,12 @@ namespace ConsoleAppMinesweeper
             //Prints a number.
             else
             {
-                DyeNumbers(playableArray, upAndDownCount, sidesCount);
+                NumColorsGuarantor.DyeNumber(playableArray, upAndDownCount, sidesCount);
                 playableArray[upAndDownCount, sidesCount].IsHidden = false;
                 Console.Write(playableArray[upAndDownCount, sidesCount].MinesAround);
                 Console.ForegroundColor = ConsoleColor.White;
             }
             ILeft = tempForLeft;
-        }
-
-        /// <summary>
-        /// Sets the current number by its color.
-        /// First, gets the current location then changes the color according to its value.
-        /// </summary>
-        /// <param name="game2DArray">The 2D Array the user is playing on.</param>
-        /// <param name="i">Gets the row number.</param>
-        /// <param name="j">Gets the column number.</param>
-        static void DyeNumbers(Cell[,] game2DArray, int i, int j)
-        {
-            switch (game2DArray[i, j].MinesAround)
-            {
-                case 8:
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    break;
-                case 7:
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    break;
-                case 6:
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    break;
-                case 5:
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    break;
-                case 4:
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    break;
-                case 3:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    break;
-                case 2:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    break;
-            }
         }
 
         /// <summary>
@@ -827,6 +718,7 @@ namespace ConsoleAppMinesweeper
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             bool loop = false, condition = false;
+
             Console.SetCursorPosition(20, 3);
             Console.Write("Would you like to restart the game?");
             Console.SetCursorPosition(19, 4);
@@ -851,8 +743,8 @@ namespace ConsoleAppMinesweeper
                 Console.SetCursorPosition(35, 9);
                 Console.WriteLine("\t");
                 Console.SetCursorPosition(35, 9);
-                string sInput = Console.ReadLine();
-                switch (sInput.ToLower())
+
+                switch (Console.ReadLine().ToLower())
                 {
                     case "yes":
                     case "y":

@@ -43,6 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
+    <Compile Include="GameInstructions.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="LoadingScreen.cs" />
+    <Compile Include="NumColorsGuarantor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
