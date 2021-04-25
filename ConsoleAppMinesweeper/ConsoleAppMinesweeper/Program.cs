@@ -5,232 +5,30 @@ namespace ConsoleAppMinesweeper
 {
     class Program
     {
-        public const char FRAME_SYMBOL = '^';
-        public const char EMPTY_CELL_SYMBOL = '~';
-        public const char MINE_SYMBOL = '*';
-        public const char MARK_SYMBOL = '!';
-        private const string BEGINNER = "Beginner";
-        private const string AMATEUR = "Amateur";
-        private const string EXPERT = "Expert";
-        private const string CUSTOMIZED = "Customized";
         public static int ILeft;
         public static int IHidden;
+        public static GameManager gameManager;
 
         static void Main(string[] args)
         {
-            string userInput;
             int rows, columns, mines;
             bool isGameOver = false;
 
             while (!isGameOver)
             {
-                Console.ForegroundColor = ConsoleColor.Gray;
-
-                GameInstructions gi = new GameInstructions();
-                gi.InitializeInstructions();
-
-                DifficultyLevel(out userInput);
-                PrintUserSelection(userInput);
-
-                GetMeasures(out rows, out columns, out mines, userInput);
-                Cell[,] game2DArray = new Cell[rows, columns];
+                gameManager = new GameManager();
+                gameManager.InitializeGame();
 
                 InitializeMineSweeper(game2DArray, mines);
                 LoadingScreen.Load();
                 Console.ForegroundColor = ConsoleColor.White;
-                CordsForILeft(game2DArray, userInput);
+                CordsForILeft(game2DArray, gameManager.UserInput);
                 Console.Clear();
 
                 Print(game2DArray);
                 MovingAlongTheArray(game2DArray, mines);
                 isGameOver = IsAnotherGame();
             }
-        }
-
-        private static void PrintUserSelection(string userInput)
-        {
-            Console.Clear();
-            Console.SetCursorPosition(31, 3);
-            Console.WriteLine(userInput + " it is!");
-            Console.SetCursorPosition(31, 4);
-
-            if(userInput == CUSTOMIZED)
-                Console.Write("----------------");
-            else
-                Console.Write("--------------");
-        }
-
-        /// <summary>
-        /// Prints all the different levels and asks the user to write the difficulty that he wants to play.
-        /// </summary>
-        /// <param name="userInput">The variable that gets the user's input.</param>
-        static void DifficultyLevel(out string userInput)
-        {
-            bool passCheck = false;
-            do
-            {
-                Console.Clear();
-                Console.SetCursorPosition(15, 5);
-                Console.Write("Choose difficulty by writing it and press - Enter.\n\t\t  Beginner, Amateur, Expert or Customized: ");
-
-                userInput = Console.ReadLine();
-                switch (userInput.ToLower())
-                {
-                    case "beginner":
-                    case "b":
-                        passCheck = true;
-                        userInput = BEGINNER;
-                        break;
-                    case "amateur":
-                    case "a":
-                        passCheck = true;
-                        userInput = AMATEUR;
-                        break;
-                    case "expert":
-                    case "e":
-                        passCheck = true;
-                        userInput = EXPERT;
-                        break;
-                    case "customized":
-                    case "c":
-                        passCheck = true;
-                        userInput = CUSTOMIZED;
-                        break;
-                    default:
-                        Console.SetCursorPosition(21, 3);
-                        Console.WriteLine("Invalid content, please try again.");
-                        Thread.Sleep(2000);
-                        Console.SetCursorPosition(21, 3);
-                        Console.WriteLine("\t\t\t\t\t");
-                        Console.Clear();
-                        break;
-                }
-            } while (!passCheck);
-        }
-
-        /// <summary>
-        /// Gets the user's difficulty input and converting it to the game's measures - borders and the number of mines.
-        /// </summary>
-        /// <param name="rowLength">Keeps the row number that was set.</param>
-        /// <param name="colLength">Keeps the column number that was set.</param>
-        /// <param name="mineCount">Keeps the mines number that was set.</param>
-        /// <param name="userInput">Uses the user's input.</param>
-        static void GetMeasures(out int rowLength, out int colLength, out int mineCount, string userInput)
-        {
-            if (userInput == BEGINNER)
-            {
-                rowLength = 11;
-                colLength = 11;
-                mineCount = 10;
-            }
-            else if (userInput == AMATEUR)
-            {
-                rowLength = 18;
-                colLength = 18;
-                mineCount = 40;
-            }
-            else if (userInput == EXPERT)
-            {
-                rowLength = 18;
-                colLength = 32;
-                mineCount = 99;
-            }
-
-            else
-            {
-                rowLength = GetUserRow(userInput);
-
-                const int MAX_WIDTH = 40;
-                const int MIN_WIDTH = 6;
-                string lower = "lower";
-                string higher = "higher";
-
-                while (rowLength > MAX_WIDTH || rowLength < MIN_WIDTH)
-                {
-                    if (rowLength > MAX_WIDTH)
-                        rowLength = GetValidLengthByUser(MAX_WIDTH, lower);
-
-                    else if (rowLength < MIN_WIDTH)
-                        rowLength = GetValidLengthByUser(MIN_WIDTH, higher);
-                }
-
-                colLength = GetUserColumn(userInput);
-
-                while (colLength > MAX_WIDTH || colLength < MIN_WIDTH)
-                {
-                    if (colLength > MAX_WIDTH)
-                        colLength = GetValidLengthByUser(MAX_WIDTH, lower);
-
-                    else if (colLength < MIN_WIDTH)
-                        colLength = GetValidLengthByUser(MIN_WIDTH, higher);
-                }
-
-                mineCount = GetMinesNumByUser();
-
-                while (mineCount >= (rowLength * colLength) / MIN_WIDTH)
-                {
-                    do
-                    {
-                        Console.Clear();
-                        Console.SetCursorPosition(9, 4);
-                        Console.Write("The number of mines you've entered is greater than the field.");
-                        Console.SetCursorPosition(9, 6);
-                        Console.Write("Please enter a smaller mine number: ");
-                    } while (!int.TryParse(Console.ReadLine(), out mineCount));
-                }
-            }
-        }
-
-        private static int GetMinesNumByUser()
-        {
-            int result;
-            do
-            {
-                Console.Clear();
-                Console.SetCursorPosition(11, 5);
-                Console.Write("Enter the number of mines you want in your minesweeper: ");
-            } while (!int.TryParse(Console.ReadLine(), out result));
-            return result;
-        }
-
-        private static int GetValidLengthByUser(int limit, string scope)
-        {
-            int result;
-            do
-            {
-                Console.Clear();
-                Console.SetCursorPosition(12, 4);
-                Console.Write("The number you've entered isn't valid.");
-                Console.SetCursorPosition(12, 6);
-                Console.Write($"Please enter a different number, which is {limit} or {scope}: ");
-            } while (!int.TryParse(Console.ReadLine(), out result));
-
-            return result;
-        }
-
-        private static int GetUserColumn(string userInput)
-        {
-            int colNum;
-            do
-            {
-                PrintUserSelection(userInput);
-                Console.SetCursorPosition(29, 6);
-                Console.Write("Enter the board height: ");
-            } while (!int.TryParse(Console.ReadLine(), out colNum));
-            return colNum;
-        }
-
-        private static int GetUserRow(string userInput)
-        {
-            int rowNum;
-            do
-            {
-                PrintUserSelection(userInput);
-                Console.SetCursorPosition(28, 6);
-                Console.Write("Enter the board width: ");
-
-            } while (!int.TryParse(Console.ReadLine(), out rowNum));
-            return rowNum;
         }
 
         /// <summary>
@@ -244,16 +42,16 @@ namespace ConsoleAppMinesweeper
             //Initializes 2D array border as frames.
             for (int topAndBottomRow = 0; topAndBottomRow < game2DArray.GetLength(1); topAndBottomRow++)
             {
-                game2DArray[0, topAndBottomRow].CellValue = FRAME_SYMBOL;
+                game2DArray[0, topAndBottomRow].CellValue = StringUtilities.FRAME_SYMBOL;
                 game2DArray[0, topAndBottomRow].IsHidden = false;
-                game2DArray[game2DArray.GetLength(0) - 1, topAndBottomRow].CellValue = FRAME_SYMBOL;
+                game2DArray[game2DArray.GetLength(0) - 1, topAndBottomRow].CellValue = StringUtilities.FRAME_SYMBOL;
                 game2DArray[game2DArray.GetLength(0) - 1, topAndBottomRow].IsHidden = false;
             }
             for (int leftAndRightColumn = 0; leftAndRightColumn < game2DArray.GetLength(0); leftAndRightColumn++)
             {
-                game2DArray[leftAndRightColumn, 0].CellValue = FRAME_SYMBOL;
+                game2DArray[leftAndRightColumn, 0].CellValue = StringUtilities.FRAME_SYMBOL;
                 game2DArray[leftAndRightColumn, 0].IsHidden = false;
-                game2DArray[leftAndRightColumn, game2DArray.GetLength(1) - 1].CellValue = FRAME_SYMBOL;
+                game2DArray[leftAndRightColumn, game2DArray.GetLength(1) - 1].CellValue = StringUtilities.FRAME_SYMBOL;
                 game2DArray[leftAndRightColumn, game2DArray.GetLength(1) - 1].IsHidden = false;
             }
 
@@ -265,9 +63,9 @@ namespace ConsoleAppMinesweeper
                 //Generates new coordinates for the mines on the field.
                 int firstRndNum = rnd.Next(1, game2DArray.GetLength(0) - 1);
                 int secondRndNum = rnd.Next(1, game2DArray.GetLength(1) - 1);
-                if (game2DArray[firstRndNum, secondRndNum].CellValue != MINE_SYMBOL)
+                if (game2DArray[firstRndNum, secondRndNum].CellValue != StringUtilities.MINE_SYMBOL)
                 {
-                    game2DArray[firstRndNum, secondRndNum].CellValue = MINE_SYMBOL;
+                    game2DArray[firstRndNum, secondRndNum].CellValue = StringUtilities.MINE_SYMBOL;
 
                     //Increases the cells value around the current mine.
                     for (int aroundMineI = firstRndNum - 1; aroundMineI <= firstRndNum + 1; aroundMineI++)
@@ -288,10 +86,10 @@ namespace ConsoleAppMinesweeper
                 for (int j = 1; j < game2DArray.GetLength(1) - 1; j++)
                 {
                     //Checks if the current cell isn't a mine.
-                    if (game2DArray[i, j].CellValue != MINE_SYMBOL)
+                    if (game2DArray[i, j].CellValue != StringUtilities.MINE_SYMBOL)
                     {
                         //?: Operator - condition ? first_expression : second_expression;
-                        game2DArray[i, j].CellValue = game2DArray[i, j].MinesAround == 0 ? EMPTY_CELL_SYMBOL : (char)game2DArray[i, j].MinesAround;
+                        game2DArray[i, j].CellValue = game2DArray[i, j].MinesAround == 0 ? StringUtilities.EMPTY_CELL_SYMBOL : (char)game2DArray[i, j].MinesAround;
                     }
                     game2DArray[i, j].IsHidden = true;
                     game2DArray[i, j].IsMarked = false;
@@ -308,15 +106,15 @@ namespace ConsoleAppMinesweeper
         {
             switch (copyOfInput)
             {
-                case BEGINNER:
+                case StringUtilities.BEGINNER:
                     ILeft = 29;
                     break;
 
-                case AMATEUR:
+                case StringUtilities.AMATEUR:
                     ILeft = 22;
                     break;
 
-                case EXPERT:
+                case StringUtilities.EXPERT:
                     ILeft = 8;
                     break;
 
@@ -493,7 +291,7 @@ namespace ConsoleAppMinesweeper
                                 }
 
                                 //Checks if the current location contains a mine.
-                                else if (playableArray[upAndDownCount, sidesCount].CellValue == MINE_SYMBOL)
+                                else if (playableArray[upAndDownCount, sidesCount].CellValue == StringUtilities.MINE_SYMBOL)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     playableArray[upAndDownCount, sidesCount].IsHidden = false;
@@ -508,7 +306,7 @@ namespace ConsoleAppMinesweeper
                                         ILeft = tempForSides;
                                         for (int j = 1; j < playableArray.GetLength(1) - 1; j++)
                                         {
-                                            if (playableArray[i, j].CellValue == MINE_SYMBOL)
+                                            if (playableArray[i, j].CellValue == StringUtilities.MINE_SYMBOL)
                                             {
                                                 Console.SetCursorPosition(ILeft, upAndDown);
                                                 (playableArray[i, j].IsHidden) = false;
@@ -554,12 +352,12 @@ namespace ConsoleAppMinesweeper
                                             ILeft = tempForSides;
                                             for (int j = 1; j < playableArray.GetLength(1) - 1; j++)
                                             {
-                                                if (playableArray[i, j].CellValue == MINE_SYMBOL)
+                                                if (playableArray[i, j].CellValue == StringUtilities.MINE_SYMBOL)
                                                 {
                                                     Console.SetCursorPosition(ILeft, upAndDown);
                                                     (playableArray[i, j].IsMarked) = true;
                                                     Console.ForegroundColor = ConsoleColor.Yellow;
-                                                    Console.Write(playableArray[i, j].CellValue = MARK_SYMBOL);
+                                                    Console.Write(playableArray[i, j].CellValue = StringUtilities.MARK_SYMBOL);
                                                     Console.ForegroundColor = ConsoleColor.White;
                                                 }
                                                 ILeft += 2;
@@ -600,7 +398,7 @@ namespace ConsoleAppMinesweeper
                             }
                             playableArray[upAndDownCount, sidesCount].IsMarked = true;
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Write(playableArray[upAndDownCount, sidesCount].MarkValue = MARK_SYMBOL);
+                            Console.Write(playableArray[upAndDownCount, sidesCount].MarkValue = StringUtilities.MARK_SYMBOL);
                             Console.ForegroundColor = ConsoleColor.White;
                         }
                         else
@@ -667,11 +465,11 @@ namespace ConsoleAppMinesweeper
                     for (int aroundCharJ = sidesCount - 1; aroundCharJ <= sidesCount + 1; aroundCharJ++)
                     {
                         //Checks if the current location isn't a frame, a mine and marked by exclamation mark.
-                        if (playableArray[aroundCharI, aroundCharJ].CellValue != FRAME_SYMBOL && playableArray[aroundCharI, aroundCharJ].CellValue != MINE_SYMBOL && !playableArray[aroundCharI, aroundCharJ].IsMarked)
+                        if (playableArray[aroundCharI, aroundCharJ].CellValue != StringUtilities.FRAME_SYMBOL && playableArray[aroundCharI, aroundCharJ].CellValue != StringUtilities.MINE_SYMBOL && !playableArray[aroundCharI, aroundCharJ].IsMarked)
                         {
                             //Checks if the current location is hidden and is it an empty cell.
                             //If it does, starts all over again from the current location.
-                            if (playableArray[aroundCharI, aroundCharJ].IsHidden && playableArray[aroundCharI, aroundCharJ].CellValue == EMPTY_CELL_SYMBOL)
+                            if (playableArray[aroundCharI, aroundCharJ].IsHidden && playableArray[aroundCharI, aroundCharJ].CellValue == StringUtilities.EMPTY_CELL_SYMBOL)
                             {
                                 UnlockSlotsIfEmpty(playableArray, upAndDown, tempSides = ILeft, tempUpAndDown = upAndDown, sidesCount = aroundCharJ, upAndDownCount = aroundCharI);
                                 break;

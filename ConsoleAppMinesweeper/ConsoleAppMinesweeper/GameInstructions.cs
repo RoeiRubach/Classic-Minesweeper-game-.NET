@@ -6,9 +6,11 @@ namespace ConsoleAppMinesweeper
     {
         public void InitializeInstructions()
         {
-            bool loop = false;
+            Console.ForegroundColor = ConsoleColor.Gray;
 
-            while (!loop)
+            bool isApproved = false;
+
+            while (!isApproved)
             {
                 PrintInstructions();
 
@@ -16,7 +18,7 @@ namespace ConsoleAppMinesweeper
                 {
                     case "ok":
                     case "k":
-                        loop = true;
+                        isApproved = true;
                         break;
 
                     default:
