@@ -17,6 +17,8 @@ namespace ConsoleAppMinesweeper
                 Thread.Sleep(135);
                 dotMovementNum++;
             }
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

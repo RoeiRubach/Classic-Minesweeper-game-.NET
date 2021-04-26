@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleAppMinesweeper
 {
-    class LevelDifficultyHandler
+    public class LevelDifficultyHandler
     {
         public string GetUserDifficulty()
         {
@@ -55,19 +51,6 @@ namespace ConsoleAppMinesweeper
             } while (!passCheck);
 
             return userInputResult;
-        }
-
-        public static void PrintUserDifficulty(string userInput)
-        {
-            Console.Clear();
-            Console.SetCursorPosition(31, 3);
-            Console.WriteLine(userInput + " it is!");
-            Console.SetCursorPosition(31, 4);
-
-            if (userInput == StringUtilities.CUSTOMIZED)
-                Console.Write("----------------");
-            else
-                Console.Write("--------------");
         }
     }
 }
