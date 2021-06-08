@@ -45,7 +45,7 @@
     <Compile Include="BoardManager.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="CursorHandler.cs" />
-    <Compile Include="GameInstructions.cs" />
+    <Compile Include="TextManager.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="LevelDifficultyHandler.cs" />
     <Compile Include="LoadingScreen.cs" />

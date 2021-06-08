@@ -4,7 +4,7 @@ namespace ConsoleAppMinesweeper
 {
     public class UserActionsController
     {
-        public int IHidden { get; private set; }
+        public int IsHidden { get; private set; }
 
         public int GetMinesNum()
         {
@@ -38,7 +38,7 @@ namespace ConsoleAppMinesweeper
             int colNum;
             do
             {
-                GameManager.PrintUserDifficultyTitle();
+                TextManager.PrintUserDifficultyTitle();
                 Console.SetCursorPosition(29, 6);
                 Console.Write("Enter the board height: ");
             } while (!int.TryParse(Console.ReadLine(), out colNum));
@@ -50,7 +50,7 @@ namespace ConsoleAppMinesweeper
             int rowNum;
             do
             {
-                GameManager.PrintUserDifficultyTitle();
+                TextManager.PrintUserDifficultyTitle();
                 Console.SetCursorPosition(28, 6);
                 Console.Write("Enter the board width: ");
 
@@ -72,8 +72,8 @@ namespace ConsoleAppMinesweeper
         /// <localVariable name="redo">True / false if the player - won / lost - the game.</localVariable>
         public void MovingAlongTheArray(Cell[,] gameBoard, int minesCounter)
         {
-            int upAndDown = 5, sidesCount = 0, upAndDownCount = 0, tempSides = CursorHandler.ILeft + 2, tempUpAndDown = upAndDown + 1,
-                tempForSides = CursorHandler.ILeft + 2, tempForUpAndDown = upAndDown + 1;
+            int upAndDown = 5, sidesCount = 0, upAndDownCount = 0, tempSides = CursorHandler.CursorOffSet + 2, tempUpAndDown = upAndDown + 1,
+                tempForSides = CursorHandler.CursorOffSet + 2, tempForUpAndDown = upAndDown + 1;
             bool redo = false;
 
             ConsoleKeyInfo keyInfo;
@@ -81,45 +81,45 @@ namespace ConsoleAppMinesweeper
             {
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine("\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t");
-                Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                 keyInfo = Console.ReadKey(true);
 
                 switch (keyInfo.Key)
                 {
                     //Moving the cursor 1 time to the left.
                     case ConsoleKey.LeftArrow:
-                        CursorHandler.ILeft -= 2;
+                        CursorHandler.CursorOffSet -= 2;
                         sidesCount--;
                         //Checks if the user is staying on the field.
-                        if (CursorHandler.ILeft < 0)
+                        if (CursorHandler.CursorOffSet < 0)
                         {
-                            CursorHandler.ILeft += 2;
+                            CursorHandler.CursorOffSet += 2;
                             sidesCount++;
                             Console.SetCursorPosition(0, 0);
                             Console.Write("Trying to run away huh?\nYou'll never get out from here.\nWell.. Unless you'll finish my Minesweeper.");
-                            GameManager.SetThread(2500);
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            GameManager.SetThreadSleep(2500);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                             break;
                         }
-                        Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                        Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                         break;
 
                     //Moving the cursor 1 time to the right.
                     case ConsoleKey.RightArrow:
-                        CursorHandler.ILeft += 2;
+                        CursorHandler.CursorOffSet += 2;
                         sidesCount++;
                         //Checks if the user is staying on the field.
-                        if (CursorHandler.ILeft > 79)
+                        if (CursorHandler.CursorOffSet > 79)
                         {
-                            CursorHandler.ILeft -= 2;
+                            CursorHandler.CursorOffSet -= 2;
                             sidesCount--;
                             Console.SetCursorPosition(0, 0);
                             Console.Write("Trying to run away huh?\nYou'll never get out from here.\nWell.. Unless you'll finish my Minesweeper.");
-                            GameManager.SetThread(2500);
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            GameManager.SetThreadSleep(2500);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                             break;
                         }
-                        Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                        Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                         break;
 
                     //Moving the cursor 1 time up.
@@ -133,11 +133,11 @@ namespace ConsoleAppMinesweeper
                             upAndDownCount++;
                             Console.SetCursorPosition(0, 0);
                             Console.Write("Trying to run away huh?\nYou'll never get out from here.\nWell.. Unless you'll finish my Minesweeper.");
-                            GameManager.SetThread(2500);
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            GameManager.SetThreadSleep(2500);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                             break;
                         }
-                        Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                        Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                         break;
 
                     //Moving the cursor 1 time down.
@@ -151,16 +151,16 @@ namespace ConsoleAppMinesweeper
                             upAndDownCount--;
                             Console.SetCursorPosition(0, 47);
                             Console.Write("There's sharks out there.. Trust me, I'm doing you a favor.\nNow go up there and finish my Minesweeper!");
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                             break;
                         }
-                        Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                        Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                         break;
 
                     case ConsoleKey.Enter:
                         Console.SetCursorPosition(0, 0);
                         Console.WriteLine("\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t");
-                        Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                        Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
 
                         //Checks if the Enter was inside the field.
                         if (sidesCount >= 0 && upAndDownCount >= 0 && upAndDownCount < gameBoard.GetLength(0) && sidesCount < gameBoard.GetLength(1))
@@ -175,8 +175,8 @@ namespace ConsoleAppMinesweeper
                                 {
                                     Console.SetCursorPosition(0, 0);
                                     Console.Write("To clear this exclamation mark press - Delete");
-                                    GameManager.SetThread(2500);
-                                    Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                                    GameManager.SetThreadSleep(2500);
+                                    Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                                 }
 
                                 //Checks if the current location contains a mine.
@@ -192,21 +192,21 @@ namespace ConsoleAppMinesweeper
                                     //Prints all the mines on the field. Then waits 2.5 seconds, clears everything and print "Game over".
                                     for (int i = 1; i < gameBoard.GetLength(0) - 1; i++)
                                     {
-                                        CursorHandler.ILeft = tempForSides;
+                                        CursorHandler.CursorOffSet = tempForSides;
                                         for (int j = 1; j < gameBoard.GetLength(1) - 1; j++)
                                         {
                                             if (gameBoard[i, j].CellValue == StringUtilities.MINE_SYMBOL)
                                             {
-                                                Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                                                Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                                                 (gameBoard[i, j].IsHidden) = false;
                                                 Console.Write(gameBoard[i, j].CellValue);
                                             }
-                                            CursorHandler.ILeft += 2;
+                                            CursorHandler.CursorOffSet += 2;
                                         }
                                         upAndDown++;
                                     }
                                     Console.ForegroundColor = ConsoleColor.Gray;
-                                    GameManager.SetThread(2500);
+                                    GameManager.SetThreadSleep(2500);
                                     Console.Clear();
                                     Console.SetCursorPosition(31, 1);
                                     Console.WriteLine("Game over!");
@@ -217,8 +217,8 @@ namespace ConsoleAppMinesweeper
                                 }
                                 else
                                 {
-                                    BoardManager.UnlockSlotsIfEmpty(gameBoard, upAndDown, tempSides = CursorHandler.ILeft, tempUpAndDown = upAndDown, sidesCount, upAndDownCount);
-                                    IHidden = 0;
+                                    BoardManager.UnlockSlotsIfEmpty(gameBoard, upAndDown, tempSides = CursorHandler.CursorOffSet, tempUpAndDown = upAndDown, sidesCount, upAndDownCount);
+                                    IsHidden = 0;
 
                                     //Counts the number of hidden values.
                                     for (int i = 1; i < gameBoard.GetLength(0) - 1; i++)
@@ -227,34 +227,34 @@ namespace ConsoleAppMinesweeper
                                         {
                                             if (gameBoard[i, j].IsHidden)
                                             {
-                                                IHidden++;
+                                                IsHidden++;
                                             }
                                         }
                                     }
                                     //Checks if the amount of hidden values is equal to the number of mines.
                                     //If it does, uses a nested loop to print all the mines locations as exclamation marks.
-                                    if (IHidden == minesCounter)
+                                    if (IsHidden == minesCounter)
                                     {
                                         upAndDown = tempForUpAndDown;
                                         for (int i = 1; i < gameBoard.GetLength(0) - 1; i++)
                                         {
-                                            CursorHandler.ILeft = tempForSides;
+                                            CursorHandler.CursorOffSet = tempForSides;
                                             for (int j = 1; j < gameBoard.GetLength(1) - 1; j++)
                                             {
                                                 if (gameBoard[i, j].CellValue == StringUtilities.MINE_SYMBOL)
                                                 {
-                                                    Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                                                    Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                                                     (gameBoard[i, j].IsMarked) = true;
                                                     Console.ForegroundColor = ConsoleColor.Yellow;
                                                     Console.Write(gameBoard[i, j].CellValue = StringUtilities.MARK_SYMBOL);
                                                     Console.ForegroundColor = ConsoleColor.White;
                                                 }
-                                                CursorHandler.ILeft += 2;
+                                                CursorHandler.CursorOffSet += 2;
                                             }
                                             upAndDown++;
                                         }
                                         Console.ForegroundColor = ConsoleColor.Yellow;
-                                        GameManager.SetThread(2500);
+                                        GameManager.SetThreadSleep(2500);
                                         Console.Clear();
                                         Console.SetCursorPosition(28, 1);
                                         Console.WriteLine("Congratulations!");
@@ -270,8 +270,8 @@ namespace ConsoleAppMinesweeper
                         {
                             Console.SetCursorPosition(0, 0);
                             Console.Write("What are you trying to click on?\nYou totally missed the board..");
-                            GameManager.SetThread(2500);
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            GameManager.SetThreadSleep(2500);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                         }
                         break;
 
@@ -294,8 +294,8 @@ namespace ConsoleAppMinesweeper
                         {
                             Console.SetCursorPosition(0, 0);
                             Console.Write("Trying to redecorate my Minesweeper I see..\nMaybe it's better to focus on finishing it.");
-                            GameManager.SetThread(2500);
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            GameManager.SetThreadSleep(2500);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                         }
                         break;
 
@@ -315,8 +315,8 @@ namespace ConsoleAppMinesweeper
                         {
                             Console.SetCursorPosition(0, 0);
                             Console.Write("There is nothing to delete out there..\nMaybe it's better to focus on the Minesweeper.");
-                            GameManager.SetThread(2500);
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            GameManager.SetThreadSleep(2500);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                         }
                         break;
                 }

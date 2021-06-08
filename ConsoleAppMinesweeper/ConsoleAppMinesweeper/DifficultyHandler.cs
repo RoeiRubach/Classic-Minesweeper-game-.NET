@@ -2,18 +2,18 @@
 
 namespace ConsoleAppMinesweeper
 {
-    public class LevelDifficultyHandler
+    public class DifficultyHandler
     {
-        public string GetUserDifficulty()
+        public static string UserDifficulty { get; private set; }
+
+        public void SetUserDifficulty()
         {
             string userInputResult;
             bool passCheck = false;
 
             do
             {
-                Console.Clear();
-                Console.SetCursorPosition(15, 5);
-                Console.Write("Choose difficulty by writing it and press - Enter.\n\t\t  Beginner, Amateur, Expert or Customized: ");
+                TextManager.PrintDifficultyInstructions();
 
                 userInputResult = Console.ReadLine();
 
@@ -22,35 +22,32 @@ namespace ConsoleAppMinesweeper
                     case "beginner":
                     case "b":
                         passCheck = true;
-                        userInputResult = StringUtilities.BEGINNER;
+                        UserDifficulty = StringUtilities.BEGINNER;
                         break;
+
                     case "amateur":
                     case "a":
                         passCheck = true;
-                        userInputResult = StringUtilities.AMATEUR;
+                        UserDifficulty = StringUtilities.AMATEUR;
                         break;
+
                     case "expert":
                     case "e":
                         passCheck = true;
-                        userInputResult = StringUtilities.EXPERT;
+                        UserDifficulty = StringUtilities.EXPERT;
                         break;
+
                     case "customized":
                     case "c":
                         passCheck = true;
-                        userInputResult = StringUtilities.CUSTOMIZED;
+                        UserDifficulty = StringUtilities.CUSTOMIZED;
                         break;
+
                     default:
-                        Console.SetCursorPosition(21, 3);
-                        Console.WriteLine("Invalid content, please try again.");
-                        GameManager.SetThread(2000);
-                        Console.SetCursorPosition(21, 3);
-                        Console.WriteLine("\t\t\t\t\t");
-                        Console.Clear();
+                        TextManager.ClearUserInputDifficulty();
                         break;
                 }
             } while (!passCheck);
-
-            return userInputResult;
         }
     }
 }

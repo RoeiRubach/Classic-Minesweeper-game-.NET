@@ -7,15 +7,16 @@ namespace ConsoleAppMinesweeper
         public Cell[,] Game2DArray { get; private set; }
         public int MinesCount { get; private set; }
 
-        private UserActionsController userActionsController;
-        private int rowLength, colLength;
+        private UserActionsController _userActionsController;
+        private int _rowLength;
+        private int _colLength;
 
-        public BoardManager() => userActionsController = new UserActionsController();
+        public BoardManager() => _userActionsController = new UserActionsController();
 
         public void SetBoard()
         {
             GetMeasures();
-            Game2DArray = new Cell[rowLength, colLength];
+            Game2DArray = new Cell[_rowLength, _colLength];
             SetFrame();
             SetMines();
         }
@@ -26,7 +27,7 @@ namespace ConsoleAppMinesweeper
 
             for (int i = 0; i < Game2DArray.GetLength(0); i++)
             {
-                temp = CursorHandler.ILeft;
+                temp = CursorHandler.CursorOffSet;
 
                 for (int j = 0; j < Game2DArray.GetLength(1); j++)
                 {
@@ -46,57 +47,57 @@ namespace ConsoleAppMinesweeper
 
         private void GetMeasures()
         {
-            if (GameManager.UserDifficultyInput == StringUtilities.BEGINNER)
+            if (DifficultyHandler.UserDifficulty == StringUtilities.BEGINNER)
             {
-                rowLength = 11;
-                colLength = 11;
+                _rowLength = 11;
+                _colLength = 11;
                 MinesCount = 10;
             }
-            else if (GameManager.UserDifficultyInput == StringUtilities.AMATEUR)
+            else if (DifficultyHandler.UserDifficulty == StringUtilities.AMATEUR)
             {
-                rowLength = 18;
-                colLength = 18;
+                _rowLength = 18;
+                _colLength = 18;
                 MinesCount = 40;
             }
-            else if (GameManager.UserDifficultyInput == StringUtilities.EXPERT)
+            else if (DifficultyHandler.UserDifficulty == StringUtilities.EXPERT)
             {
-                rowLength = 18;
-                colLength = 32;
+                _rowLength = 18;
+                _colLength = 32;
                 MinesCount = 99;
             }
 
             else
             {
-                rowLength = userActionsController.GetRow();
+                _rowLength = _userActionsController.GetRow();
 
                 const int MAX_WIDTH = 40;
                 const int MIN_WIDTH = 6;
                 string lower = "lower";
                 string higher = "higher";
 
-                while (rowLength > MAX_WIDTH || rowLength < MIN_WIDTH)
+                while (_rowLength > MAX_WIDTH || _rowLength < MIN_WIDTH)
                 {
-                    if (rowLength > MAX_WIDTH)
-                        rowLength = userActionsController.GetValidLength(MAX_WIDTH, lower);
+                    if (_rowLength > MAX_WIDTH)
+                        _rowLength = _userActionsController.GetValidLength(MAX_WIDTH, lower);
 
-                    else if (rowLength < MIN_WIDTH)
-                        rowLength = userActionsController.GetValidLength(MIN_WIDTH, higher);
+                    else if (_rowLength < MIN_WIDTH)
+                        _rowLength = _userActionsController.GetValidLength(MIN_WIDTH, higher);
                 }
 
-                colLength = userActionsController.GetColumn();
+                _colLength = _userActionsController.GetColumn();
 
-                while (colLength > MAX_WIDTH || colLength < MIN_WIDTH)
+                while (_colLength > MAX_WIDTH || _colLength < MIN_WIDTH)
                 {
-                    if (colLength > MAX_WIDTH)
-                        colLength = userActionsController.GetValidLength(MAX_WIDTH, lower);
+                    if (_colLength > MAX_WIDTH)
+                        _colLength = _userActionsController.GetValidLength(MAX_WIDTH, lower);
 
-                    else if (colLength < MIN_WIDTH)
-                        colLength = userActionsController.GetValidLength(MIN_WIDTH, higher);
+                    else if (_colLength < MIN_WIDTH)
+                        _colLength = _userActionsController.GetValidLength(MIN_WIDTH, higher);
                 }
 
-                MinesCount = userActionsController.GetMinesNum();
+                MinesCount = _userActionsController.GetMinesNum();
 
-                while (MinesCount >= (rowLength * colLength) / MIN_WIDTH)
+                while (MinesCount >= (_rowLength * _colLength) / MIN_WIDTH)
                 {
                     int tempInput;
 
@@ -189,8 +190,8 @@ namespace ConsoleAppMinesweeper
         /// <param name="upAndDownCount">Tracking on which cell the user is currently on. - Columns</param>
         public static void UnlockSlotsIfEmpty(Cell[,] playableArray, int upAndDown, int tempSides, int tempUpAndDown, int sidesCount, int upAndDownCount)
         {
-            int tempForLeft = CursorHandler.ILeft;
-            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+            int tempForLeft = CursorHandler.CursorOffSet;
+            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
 
             //Checks if the current location is equal to 'empty'.
             if (playableArray[upAndDownCount, sidesCount].MinesAround == 0)
@@ -202,7 +203,7 @@ namespace ConsoleAppMinesweeper
                 //Passes around the current location.
                 for (int aroundCharI = upAndDownCount - 1; aroundCharI <= upAndDownCount + 1; aroundCharI++)
                 {
-                    CursorHandler.ILeft = tempSides - 2;
+                    CursorHandler.CursorOffSet = tempSides - 2;
 
                     for (int aroundCharJ = sidesCount - 1; aroundCharJ <= sidesCount + 1; aroundCharJ++)
                     {
@@ -213,11 +214,11 @@ namespace ConsoleAppMinesweeper
                             //If it does, starts all over again from the current location.
                             if (playableArray[aroundCharI, aroundCharJ].IsHidden && playableArray[aroundCharI, aroundCharJ].CellValue == StringUtilities.EMPTY_CELL_SYMBOL)
                             {
-                                UnlockSlotsIfEmpty(playableArray, upAndDown, tempSides = CursorHandler.ILeft, tempUpAndDown = upAndDown, sidesCount = aroundCharJ, upAndDownCount = aroundCharI);
+                                UnlockSlotsIfEmpty(playableArray, upAndDown, tempSides = CursorHandler.CursorOffSet, tempUpAndDown = upAndDown, sidesCount = aroundCharJ, upAndDownCount = aroundCharI);
                                 break;
                             }
 
-                            Console.SetCursorPosition(CursorHandler.ILeft, upAndDown);
+                            Console.SetCursorPosition(CursorHandler.CursorOffSet, upAndDown);
                             //Checks if the current location isn't equal to 'empty' and it's hidden.
                             if (playableArray[aroundCharI, aroundCharJ].MinesAround != 0 && playableArray[aroundCharI, aroundCharJ].IsHidden)
                             {
@@ -233,7 +234,7 @@ namespace ConsoleAppMinesweeper
                                 Console.Write(playableArray[aroundCharI, aroundCharJ].CellValue);
                             }
                         }
-                        CursorHandler.ILeft += 2;
+                        CursorHandler.CursorOffSet += 2;
                     }
                     upAndDown++;
                 }
@@ -247,7 +248,7 @@ namespace ConsoleAppMinesweeper
                 Console.Write(playableArray[upAndDownCount, sidesCount].MinesAround);
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            CursorHandler.ILeft = tempForLeft;
+            CursorHandler.CursorOffSet = tempForLeft;
         }
     }
 }
