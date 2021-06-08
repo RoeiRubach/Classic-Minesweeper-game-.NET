@@ -47,7 +47,7 @@
     <Compile Include="CursorHandler.cs" />
     <Compile Include="TextManager.cs" />
     <Compile Include="GameManager.cs" />
-    <Compile Include="LevelDifficultyHandler.cs" />
+    <Compile Include="DifficultyHandler.cs" />
     <Compile Include="LoadingScreen.cs" />
     <Compile Include="NumColorsGuarantor.cs" />
     <Compile Include="Program.cs" />
