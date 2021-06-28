@@ -13,14 +13,16 @@ This was for my first year, first semester, C#, final project. We had different 
 
 ## Build Status
 
-The game currently has 2 options:
 - [x] Play in different difficulties.
-- [x] Exit.
 
 Everything is working and ready to play.
 ```
 current date: Jun-30-18
 ```
+
+## Setup
+
+Simply download the .exe from the latest release.
 
 ## Code style
 
