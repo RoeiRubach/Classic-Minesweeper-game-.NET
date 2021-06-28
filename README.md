@@ -1,13 +1,13 @@
 # Minesweeper :school_satchel: :boom: :exclamation:
 
-This is a minesweeper game written with Visual Studio, C# programming, console application.  
+This is a minesweeper game written with Visual Studio, C# programming, console application.\
 Minesweeper is a single-player puzzle computer game. The objective of the game is to clear a rectangular board containing hidden "mines" or bombs without detonating any of them, with help from clues about the number of neighboring mines in each field.
 
 
 ## Final course project   :mortar_board:
   
 ` EDIT: April-06-21 - I refactored the code using OOP `  
-This was my first project ever made. Before I even learned OOP.  
+This was my first project ever made. Before I even learned OOP.\
 This was for my first year, first semester, C#, final project. We had different options between which project to choose, I guess I was choosing Minesweeper because it felt like an interesting challenge.
 
 
@@ -26,6 +26,8 @@ current date: Jun-30-18
 
 The application is written in C# :bomb:
 
+## Gameplay
+![Minesweeper - gameplay GIF](https://user-images.githubusercontent.com/44708223/123645159-c16a5a80-d82e-11eb-899e-bf94b3fd7426.gif)
 
 ## Screenshots
 
