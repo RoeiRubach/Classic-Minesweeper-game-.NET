@@ -22,7 +22,7 @@ current date: Jun-30-18
 
 ## Setup
 
-Simply download the .exe from the latest release.
+Simply download the .exe from the latest [release](https://github.com/RoeiRubach/Console-App-Minesweeper/releases)
 
 ## Code style
 
