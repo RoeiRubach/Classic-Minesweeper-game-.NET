@@ -2,7 +2,7 @@
 
 namespace ConsoleAppMinesweeper
 {
-    public class NumColorsGuarantor
+    public static class NumColorsGuarantor
     {
         public static void DyeNumber(Cell[,] game2DArray, int i, int j)
         {

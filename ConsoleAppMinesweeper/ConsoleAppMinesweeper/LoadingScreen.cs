@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace ConsoleAppMinesweeper
 {
-    public class LoadingScreen
+    public static class LoadingScreen
     {
         public static void Load()
         {

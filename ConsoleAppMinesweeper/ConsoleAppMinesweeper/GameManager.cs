@@ -12,22 +12,14 @@ namespace ConsoleAppMinesweeper
         {
             _textManager = new TextManager();
             _board = new BoardManager();
-            InitializeGame();
         }
 
         public static void SetThreadSleep(int amountInMS) => Thread.Sleep(amountInMS);
 
-        public void Play()
-        {
-            UserActionsController userActionsController = new UserActionsController();
-            userActionsController.MovingAlongTheArray(_board.Game2DArray, _board.MinesCount);
-        }
-
-        private void InitializeGame()
+        public void InitializeGame()
         {
             InitializeInstructions();
             DifficultyHandler difficulty = new DifficultyHandler();
-            difficulty.SetUserDifficulty();
             TextManager.PrintUserDifficultyTitle();
             InitializeBoard();
             LoadingScreen.Load();
@@ -35,6 +27,12 @@ namespace ConsoleAppMinesweeper
 
             Console.Clear();
             _board.Print();
+        }
+
+        public void Play()
+        {
+            UserActionsController userActionsController = new UserActionsController();
+            userActionsController.MovingAlongTheArray(_board.Game2DArray, _board.MinesCount);
         }
 
         private void InitializeInstructions()
