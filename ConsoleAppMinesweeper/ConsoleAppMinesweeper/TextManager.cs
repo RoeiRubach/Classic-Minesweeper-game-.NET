@@ -21,10 +21,10 @@ namespace ConsoleAppMinesweeper
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("No!");
             Console.ForegroundColor = ConsoleColor.Gray;
-            EdgeYesNo();
+            PrintEdgeYesNo();
         }
 
-        private void EdgeYesNo()
+        private void PrintEdgeYesNo()
         {
             for (int i = 6; i <= 8; i += 2)
             {

@@ -10,7 +10,6 @@
             while (!isGameOver)
             {
                 gameManager = new GameManager();
-                gameManager.InitializeGame();
                 gameManager.Play();
 
                 isGameOver = gameManager.IsAnotherGame();

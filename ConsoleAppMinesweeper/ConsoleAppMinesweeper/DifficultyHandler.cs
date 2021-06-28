@@ -10,7 +10,6 @@ namespace ConsoleAppMinesweeper
         {
             string userInputResult;
             bool passCheck = false;
-
             do
             {
                 TextManager.PrintDifficultyInstructions();
